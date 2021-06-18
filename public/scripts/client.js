@@ -89,7 +89,7 @@ $(document).ready(function () {
     const formValues = $(this).serializeArray();
     const textAreaString = formValues[0]["value"];
 
-    $("#tweet-text").html("");
+    $("#tweet-text").val('');
 
     //Validate the tweet submitted - if it is under 140 characters and is not falsy, add the tweet
     if (textAreaString && textAreaString.length < 140) {
