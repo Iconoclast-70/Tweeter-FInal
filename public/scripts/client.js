@@ -9,20 +9,26 @@ const escape = function (str) {
 
 //Create the tweet with the data from /tweets (JSON)
 const createTweetElement = function (tweet) {
+  //<img src=${avatar}>
   const userName = tweet.user["name"];
   const handle = tweet.user["handle"];
+  const avatar = tweet.user["avatars"];
   const content = escape(tweet.content["text"]);
   const paragraphID = "tweet-paragraph";
   const tweetUserClass = "tweet-user";
   const tweetIconsClass = "tweet-icons";
+  const tweetHandleClass = "tweet-handle";
+  const userInfo = "tweet-form";
   const created = tweet["created_at"];
-  console.log(created);
   const timeStamp = timeago.format(created);
   const $tweet = $(
     `<article>
-      <h3>
+      <h3 class=${userInfo}>
         <div class=${tweetUserClass}>
+          <img src=${avatar}>
           <span>${userName}</span>
+        </div>
+        </div class=${tweetHandleClass}>
           <span>${handle}</span>
         </div>
       </h3>
@@ -36,7 +42,6 @@ const createTweetElement = function (tweet) {
           <i class="fas fa-heart"></i>
         </div>
       </div>
-
       </article>`
   );
   return $tweet;
@@ -75,7 +80,6 @@ $(document).ready(function () {
 
   $("#tweet-submit").click(function(event) {
     $("#error-message").html(""); //Clear the error message div
-    
   });
 
   //Submit event for the form
@@ -116,6 +120,20 @@ $(document).ready(function () {
           </span>`
         );
         $("#error-message").html($errMessageTooLong);
+        $('#current-count').css('color','black');
+        $('#current-count').html('140');  
+      }
+      if (!textAreaString) {
+        const $errMessageTooLong = $(
+          `<span color="red">
+            <i class="fas fa-exclamation-triangle" color="red"></i>
+              Tweet cannot be blank. 
+            <i class="fas fa-exclamation-triangle" color="red"></i>
+          </span>`
+        );
+        $("#error-message").html($errMessageTooLong);
+        $('#current-count').css('color','black');
+        $('#current-count').html('140'); 
       }
     }
     
